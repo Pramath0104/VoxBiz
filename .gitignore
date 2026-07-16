@@ -1,0 +1,28 @@
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Testing and Sample Data
+sample_data/
+*.csv
+test_data/
+
+# Backend (Python)
+backend/__pycache__/
+backend/*.py[cod]
+backend/venv/
+backend/.env
+backend/.pytest_cache/
+
+# Frontend (Node)
+frontend/node_modules/
+frontend/dist/
+frontend/.env

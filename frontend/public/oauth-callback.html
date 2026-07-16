@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Google OAuth Callback</title>
+  </head>
+  <body>
+    <script>
+      // Parse the authorization code from URL
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+
+      if (code) {
+        // Send code to backend
+        fetch("http://localhost:3000/api/auth/google/callback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // Save token/user in localStorage or redirect
+            console.log("Google OAuth Success:", data);
+            // Redirect to homepage
+            window.location.href = "/main";
+          })
+          .catch((err) => {
+            console.error("OAuth failed:", err);
+            alert("Google Sign-in Failed");
+            window.location.href = "/";
+          });
+      } else {
+        alert("No auth code found in URL");
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
