@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect,it } from 'vitest'
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation(query => ({
@@ -14,8 +14,9 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 import { render, screen } from '@testing-library/react'
-import { vi } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
+import { vi } from 'vitest'
+
 import { ThemeProvider } from '../src/contexts/ThemeContext'
 import { ThreeDMarqueeBg } from '../src/pages/HomePage'
 

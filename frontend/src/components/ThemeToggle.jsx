@@ -1,4 +1,5 @@
 import React from "react";
+
 import { ThemeToggle as NavigationThemeToggle } from "./ui/theme-toggle";
 
 const ThemeToggle = () => {

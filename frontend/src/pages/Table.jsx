@@ -1,75 +1,47 @@
-import * as React from "react";
-import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
-import ScheduleIcon from "@mui/icons-material/Schedule";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import { Divider } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import DownloadIcon from "@mui/icons-material/Download";
-import { Drawer } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import TuneIcon from "@mui/icons-material/Tune";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import MicOffIcon from "@mui/icons-material/MicOff";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import DialogActions from "@mui/material/DialogActions";
-import MicIcon from "@mui/icons-material/Mic";
+import DownloadIcon from "@mui/icons-material/Download";
+import EmailIcon from "@mui/icons-material/Email";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import TuneIcon from "@mui/icons-material/Tune";
 import { ButtonBase } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Switch from "@mui/material/Switch";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import EmailIcon from "@mui/icons-material/Email";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Popover from "@mui/material/Popover";
-import FormGroup from "@mui/material/FormGroup";
-import DialogContentText from "@mui/material/DialogContentText";
-import { alpha } from "@mui/material/styles";
-import { visuallyHidden } from "@mui/utils";
-import { useTheme } from "../contexts/ThemeContext";
+import * as React from "react";
+import { useEffect, useRef,useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import EmailDataModal from "../components/EmailDataModal";
-import ScheduleEmailModal from "../components/ScheduleEmail";
-import { TypewriterEffectSmooth } from "../components/ui/TypeWriterEffect";
-import TableSidebar from "../components/table/TableSidebar";
-import RefineQueryDialog from "../components/table/RefineQueryDialog";
-import api from "../services/api";
-import { ErrorBoundary } from "../components/ErrorBoundary";
 
-import { createData, descendingComparator, getComparator, generateHeadCells } from "../components/table/tableUtils";
+import EmailDataModal from "../components/EmailDataModal";
+import Loader from "../components/ui/Loader";
+import { ErrorBoundary } from "../components/ErrorBoundary";
 import EnhancedTableHead from "../components/table/EnhancedTableHead";
 import EnhancedTableToolbar from "../components/table/EnhancedTableToolbar";
+import RefineQueryDialog from "../components/table/RefineQueryDialog";
+import TableSidebar from "../components/table/TableSidebar";
+import { generateHeadCells,getComparator } from "../components/table/tableUtils";
+import { useTheme } from "../contexts/ThemeContext";
+import api from "../services/api";
 export default function DataTable() {
   const location = useLocation();
-  const { visualizationData, dbId } = location.state || {};
+  const { dbId } = location.state || {};
   const navigate = useNavigate();
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -78,8 +50,6 @@ export default function DataTable() {
   const [emailModalOpen, setEmailModalOpen] = useState(false);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [selectedQuery, setSelectedQuery] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
   const [customColumns, setCustomColumns] = useState([]);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -94,7 +64,7 @@ export default function DataTable() {
   const [tableTitle, setTableTitle] = useState("");
   const [customQuery, setCustomQuery] = useState("");
   const [filterOptions, setFilterOptions] = useState({});
-  const [densePaddingLabel, setDensePaddingLabel] = useState("Dense padding");
+  const [densePaddingLabel] = useState("Dense padding");
 
 
 
@@ -184,7 +154,7 @@ export default function DataTable() {
         data = passedData;
 
         if (!data || data.length === 0) {
-          console.log("No data received from props");
+          
           // Instead of using sample data, just set empty arrays
           setRows([]);
           setFilteredRows([]);
@@ -259,7 +229,7 @@ export default function DataTable() {
             setFilterOptions(dynamicFilters);
           }
         }
-        console.log("Navigating with data:", data);
+        
         setLoading(false);
       } catch (err) {
         setError("Failed to process data");
@@ -275,18 +245,16 @@ export default function DataTable() {
 
 
   const handleSearch = (query) => {
-    console.log("Search query:", query);
-    console.log("Rows available:", rows.length);
+    
     if (!query) {
       setFilteredRows(rows);
       return;
     }
 
-    const searchableColumns = headCells.map((cell) => cell.id);
-    console.log("Searchable columns:", searchableColumns);
+
 
     const searchTerms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
-    console.log("Search terms:", searchTerms);
+    
 
     const filtered = rows.filter((row) => {
       // Stringify the entire row (ignoring keys, just values) to make it highly robust
@@ -307,14 +275,14 @@ export default function DataTable() {
       return match;
     });
 
-    console.log("Filtered length:", filtered.length);
+    
     setFilteredRows(filtered);
     setPage(0);
   };
 
-  const handleFilter = (filterSelections) => {
+  const handleFilter = () => {
     // Implement the filter logic here
-    console.log("Applying filters:", filterSelections);
+    
 
     // This is just a simple example - modify based on your needs
     let filtered = [...rows];
@@ -373,9 +341,6 @@ export default function DataTable() {
     setDense(event.target.checked);
   };
 
-  const handleBackClick = () => {
-    navigate("/visChoice");
-  };
   // State variables
   const [notExpectedDialogOpen, setNotExpectedDialogOpen] = useState(false);
   const [refinementFeedback, setRefinementFeedback] = useState("");
@@ -383,9 +348,9 @@ export default function DataTable() {
   const [sidebarOpen, setSidebarOpen] = useState(false); // Default to closed
   const [voiceCommandActive, setVoiceCommandActive] = useState(false);
   const [transcribedCommand, setTranscribedCommand] = useState("");
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState("");
-  const [message, setMessage] = useState(
+  const [, setIsListening] = useState(false);
+  const [, setTranscript] = useState("");
+  const [, setMessage] = useState(
     "Click the microphone to start speaking",
   );
   const recognitionRef = useRef(null);
@@ -425,7 +390,7 @@ export default function DataTable() {
       const finalTranscript = Array.from(event.results)
         .map((result) => result[0].transcript)
         .join("");
-      console.log("Final transcript:", finalTranscript);
+      
       setTranscript(finalTranscript);
       setTranscribedCommand(finalTranscript);
       setMessage("Transcription complete. You can submit your query.");
@@ -599,7 +564,7 @@ export default function DataTable() {
           const dynamicHeadCells = generateHeadCells(result.data);
           setHeadCells(dynamicHeadCells);
           setCustomColumns(dynamicHeadCells.map((cell) => cell.id));
-          console.log(result.data.length || 0);
+          
         }
       }
 
@@ -613,9 +578,6 @@ export default function DataTable() {
     }
   };
 
-  const navigateToGraphView = () => {
-    navigate("/rendergraph", { state: { visualizationData: data } });
-  };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
@@ -789,7 +751,7 @@ export default function DataTable() {
                   height: "300px",
                 }}
               >
-                <CircularProgress />
+                <Loader />
               </Box>
             ) : error ? (
               <Box sx={{ p: 3, textAlign: "center" }}>
@@ -992,7 +954,7 @@ export default function DataTable() {
               sx={{ color: darkMode ? "white" : "black" }}
             />
 
-            <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ display: "flex", gap: 2, pr: { xs: 8, sm: 10 } }}>
               <Button
                 variant="outlined"
                 color="warning"

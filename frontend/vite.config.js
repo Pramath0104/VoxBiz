@@ -1,10 +1,9 @@
-import path from "path";
-import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import path from "path";
+import { defineConfig } from 'vite';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   // Load env variables from .env file based on mode
-  const env = loadEnv(mode, process.cwd());
 
   return {
     plugins: [react()],
@@ -13,8 +12,5 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
-    define: {
-      'import.meta.env.VITE_GOOGLE_API_KEY': JSON.stringify(env.VITE_GOOGLE_API_KEY)
-    }
   };
 });

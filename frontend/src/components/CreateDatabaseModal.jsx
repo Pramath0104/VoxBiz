@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback,useState } from "react";
 import { useDropzone } from "react-dropzone";
+
+import api from "../services/api"; // Secure instance pointing to FastAPI
 import DocButton from "./ui/Document";
 import Loader from "./ui/Loader";
-import api from "../services/api"; // Secure instance pointing to FastAPI
 
 const CreateDatabaseModal = ({ darkMode, onClose }) => {
   const [step, setStep] = useState("excel");

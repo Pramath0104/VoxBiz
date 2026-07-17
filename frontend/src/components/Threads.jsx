@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
-
 import './Threads.css';
+
+import { Color,Mesh, Program, Renderer, Triangle } from 'ogl';
+import { useEffect, useRef } from 'react';
 
 const vertexShader = `
 attribute vec2 position;

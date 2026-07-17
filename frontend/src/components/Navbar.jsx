@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import ChatBox from "./Chat";
 import { MessageSquare } from "lucide-react";
+import React, { useEffect, useRef,useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+
 import { useTheme } from "../contexts/ThemeContext";
+import ChatBox from "./Chat";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className="flex w-full items-center justify-between border-b px-6 py-3 sticky top-0 z-40 transition-colors bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-gray-200 text-gray-900 shadow-sm dark:border-gray-800 dark:text-white"
+        className="flex w-full items-center justify-between border-b px-6 py-3 sticky top-0 z-[60] transition-colors bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-gray-200 text-gray-900 shadow-sm dark:border-gray-800 dark:text-white"
       >
       <div className="flex items-center gap-4">
         <div 

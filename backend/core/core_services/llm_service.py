@@ -1,13 +1,13 @@
-import os
 # pyrefly: ignore [missing-import]
-from dotenv import load_dotenv
 import asyncio
+import json
+import logging
+import re
+
+from fastapi import HTTPException
+
 # pyrefly: ignore [missing-import]
 from openai import AsyncOpenAI
-import logging
-import json
-from fastapi import HTTPException
-import re
 
 logger = logging.getLogger(__name__)
 

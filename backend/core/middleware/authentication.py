@@ -1,6 +1,8 @@
 from fastapi import Depends, HTTPException, status
+
 # pyrefly: ignore [missing-import]
 from fastapi.security import OAuth2PasswordBearer
+
 from core.jwt.jwt_handler import decode_access_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")

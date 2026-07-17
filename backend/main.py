@@ -1,25 +1,28 @@
 import os
+
 from dotenv import load_dotenv
 
 # Load environment variables before any application imports
 load_dotenv()
 
-from fastapi import FastAPI, Request
 from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, Request
+
 # pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
-from core.db_connection import connect_to_mongo, close_mongo_connection, get_db
-from core.routers import api_router
-from core.limiter import limiter
+from prometheus_fastapi_instrumentator import Instrumentator
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
-from prometheus_fastapi_instrumentator import Instrumentator
-from core.middleware.request_context import RequestContextMiddleware
-from core.logger import logger
 
-# Load environment variables
-load_dotenv()
+from core.db_connection import close_mongo_connection, connect_to_mongo, get_db
+from core.limiter import limiter
+from core.logger import logger
+from core.middleware.request_context import RequestContextMiddleware
+from core.routers import api_router
+
+
 
 # Define lifespan event for startup and shutdown
 @asynccontextmanager

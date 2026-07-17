@@ -1,9 +1,17 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, Depends, Request
+
 from core.db_connection import get_active_db
-from core.middleware.authentication import get_current_user
-from src.query.dtos import QueryRequest, InsightsRequest, ChatRequest, MutationRequest, SendDataEmailRequest, GlobalQueryRequest
-from src.query.controller import QueryController
 from core.limiter import limiter
+from core.middleware.authentication import get_current_user
+from src.query.controller import QueryController
+from src.query.dtos import (
+    ChatRequest,
+    GlobalQueryRequest,
+    InsightsRequest,
+    MutationRequest,
+    QueryRequest,
+    SendDataEmailRequest,
+)
 
 router = APIRouter()
 query_controller = QueryController()

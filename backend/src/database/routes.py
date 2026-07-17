@@ -1,11 +1,15 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Request
-from core.middleware.authentication import get_current_user
-from core.db_connection import get_active_db
+from typing import List
+
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
+
 # pyrefly: ignore [missing-import]
 from pydantic import BaseModel
-from typing import List
-from src.database.controller import DatabaseController
+
+from core.db_connection import get_active_db
 from core.limiter import limiter
+from core.middleware.authentication import get_current_user
+from src.database.controller import DatabaseController
+
 
 class SqlUploadRequest(BaseModel):
     dbName: str

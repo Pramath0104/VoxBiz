@@ -1,6 +1,13 @@
 from fastapi import HTTPException
+
 from core.core_services.llm_service import NLPQueryEngine
-from src.query.dtos import QueryRequest, InsightsRequest, ChatRequest, SendDataEmailRequest
+from src.query.dtos import (
+    ChatRequest,
+    InsightsRequest,
+    QueryRequest,
+    SendDataEmailRequest,
+)
+
 
 class QueryController:
     def __init__(self):
@@ -71,7 +78,7 @@ class QueryController:
             }
         except HTTPException:
             raise
-        except Exception as e:
+        except Exception:
             from core.logger import logger
             logger.exception("Query processing failed")
             raise HTTPException(status_code=500, detail="Query processing failed")
@@ -158,7 +165,7 @@ class QueryController:
             
         except HTTPException:
             raise
-        except Exception as e:
+        except Exception:
             from core.logger import logger
             logger.exception("Global Query processing failed")
             raise HTTPException(status_code=500, detail="Global Query processing failed")
@@ -179,8 +186,9 @@ class QueryController:
 
     async def send_data_email(self, request: SendDataEmailRequest):
         try:
-            from core.core_services.email_service import email_service
             import asyncio
+
+            from core.core_services.email_service import email_service
             
             body = request.message if hasattr(request, 'message') and request.message else "Please see the attached data insights."
             

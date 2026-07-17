@@ -1,6 +1,8 @@
+from typing import Optional
+
 from core.db_connection import get_db
 from src.user.dtos import UserInDB
-from typing import Optional
+
 
 class UserRepository:
     def get_collection(self):

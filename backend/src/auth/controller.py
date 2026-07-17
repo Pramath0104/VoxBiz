@@ -1,8 +1,10 @@
 from fastapi import HTTPException
+
+from core.jwt.jwt_handler import create_access_token, hash_password, verify_password
+from src.auth.dtos import TokenResponse
 from src.user.dtos import UserCreate, UserInDB
 from src.user.repository import UserRepository
-from src.auth.dtos import TokenResponse
-from core.jwt.jwt_handler import hash_password, verify_password, create_access_token
+
 
 class AuthController:
     def __init__(self):
@@ -63,7 +65,7 @@ class AuthController:
         from datetime import datetime, timedelta
         
         # Generate 6-digit code
-        reset_code = ''.join(secrets.choice('0123456789') for i in range(6))
+        reset_code = ''.join(secrets.choice('0123456789') for _ in range(6))
         hashed_code = hash_password(reset_code)
         expires_at = datetime.utcnow() + timedelta(seconds=30)
         
@@ -71,8 +73,9 @@ class AuthController:
         repo = ResetTokenRepository()
         await repo.save_reset_token(email, hashed_code, expires_at)
         
-        from core.core_services.email_service import email_service
         import asyncio
+
+        from core.core_services.email_service import email_service
         # Dispatch email asynchronously
         asyncio.create_task(
             email_service.send_email(

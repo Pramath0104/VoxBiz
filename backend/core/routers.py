@@ -1,7 +1,8 @@
 from fastapi import APIRouter
+
 from src.auth.routes import router as auth_router
-from src.query.routes import router as query_router
 from src.database.routes import router as database_router
+from src.query.routes import router as query_router
 
 api_router = APIRouter()
 

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
-import { User, Mail, Shield, Activity, Key } from "lucide-react";
-import { useTheme } from "../contexts/ThemeContext";
+import { Activity, Key,Mail, Shield, User } from "lucide-react";
+import React, { useEffect,useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
+import { useTheme } from "../contexts/ThemeContext";
+import api from "../services/api";
 
 const ProfilePage = () => {
   const navigate = useNavigate();

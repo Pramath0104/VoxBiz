@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react";
-import api from "../services/api";
+import React, { useEffect,useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
+
+import api from "../services/api";
 
 const BusinessChatBox = ({ onClose }) => {
   const [messages, setMessages] = useState([]);
@@ -45,7 +46,7 @@ const BusinessChatBox = ({ onClose }) => {
         { role: "assistant", content: botResponse },
       ]);
     } catch (error) {
-      console.error("Gemini error:", error);
+      console.error("AI API error:", error);
       setMessages([
         ...newMessages,
         {
@@ -67,7 +68,7 @@ const BusinessChatBox = ({ onClose }) => {
   };
 
   return (
-    <div className="w-[450px] sm:w-[500px] bg-transparent  shadow-2xl border dark:border-gray-700 rounded-2xl overflow-hidden flex flex-col max-h-[70vh] transition-colors">
+    <div className="w-[450px] sm:w-[500px] bg-white dark:bg-gray-900 shadow-2xl border dark:border-gray-700 rounded-2xl overflow-hidden flex flex-col max-h-[70vh] transition-colors">
       <div className="p-4 bg-[#002244] dark:bg-gray-800 text-white flex justify-between rounded-t-lg transition-colors">
         <span className="font-bold">Business Strategy Assistant</span>
         <button
@@ -78,7 +79,7 @@ const BusinessChatBox = ({ onClose }) => {
         </button>
       </div>
 
-      <div className="h-96 overflow-y-auto p-4 bg-gray-50  transition-colors">
+      <div className="h-96 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-900 transition-colors">
         {messages.length === 0 && (
           <div className="text-gray-500 dark:text-gray-400 text-center p-4">
             Welcome! Ask me anything about business strategy, KPIs, growth
@@ -109,7 +110,7 @@ const BusinessChatBox = ({ onClose }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="p-3 bg-transparent  border-t dark:border-gray-700 flex transition-colors">
+      <div className="p-3 bg-white dark:bg-gray-900 border-t dark:border-gray-700 flex transition-colors">
         <input
           type="text"
           className="flex-1 p-2 border dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"

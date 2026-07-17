@@ -1,12 +1,16 @@
 from fastapi import APIRouter, Depends, Request
+
 # pyrefly: ignore [missing-import]
 from fastapi.security import OAuth2PasswordRequestForm
-from src.user.dtos import UserCreate
-from .dtos import TokenResponse
-from .controller import AuthController
+
 # pyrefly: ignore [missing-import]
 from pydantic import BaseModel
+
 from core.limiter import limiter
+from src.user.dtos import UserCreate
+
+from .controller import AuthController
+from .dtos import TokenResponse
 
 router = APIRouter()
 auth_controller = AuthController()
@@ -58,8 +62,10 @@ async def reset_password(request: Request, req: MockResetPasswordRequest):
     """
     return await auth_controller.reset_password(req.email, req.code, req.newPassword)
 
-from core.middleware.authentication import get_current_user
 from fastapi import HTTPException
+
+from core.middleware.authentication import get_current_user
+
 
 @router.get("/me")
 async def get_me(user: dict = Depends(get_current_user)):

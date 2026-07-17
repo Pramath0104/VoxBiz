@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-import api from "../services/api";
+import React, { useEffect,useState } from "react";
 import { useLocation } from "react-router-dom";
+
 import { useTheme } from "../contexts/ThemeContext";
+import AIInsightsPanel from "./graph/AIInsightsPanel";
 import { COLOR_PALETTES } from "./graph/constants";
 import EnhancedGraphRender from "./graph/EnhancedGraphRender";
-import AIInsightsPanel from "./graph/AIInsightsPanel";
 
 const Graphrender = () => {
   const location = useLocation();
@@ -51,7 +51,6 @@ const Graphrender = () => {
           passedData = passedData.data;
         }
         data = passedData;
-        console.log("Data loaded from location state:", data);
       }
       // If not, try to get from session storage
       else {
@@ -62,7 +61,6 @@ const Graphrender = () => {
             parsed = parsed.data;
           }
           data = parsed;
-          console.log("Data loaded from session storage:", data);
         } else {
           console.warn(
             "No visualization data found in location state or session storage",
@@ -79,11 +77,9 @@ const Graphrender = () => {
         // Make sure data is in the right format before setting it
         if (Array.isArray(data)) {
           setChartData(data);
-          console.log("Chart data set:", data);
         } else if (typeof data === "object") {
           // If data is an object but not an array, convert it to an array
           setChartData([data]);
-          console.log("Chart data set from object:", [data]);
         } else {
           console.error("Visualization data is in an unexpected format:", data);
           setError((prev) => ({ ...prev, chart: "Invalid data format" }));
@@ -101,7 +97,6 @@ const Graphrender = () => {
 
   // Fetch data on component mount
   useEffect(() => {
-    console.log("Location state on mount:", location.state);
     fetchChartData();
 
 
@@ -112,7 +107,6 @@ const Graphrender = () => {
     if (location.state?.selectedGraphType) {
       // Convert the first letter to lowercase for proper graph type matching
       const graphTypeValue = location.state.selectedGraphType;
-      console.log("Location Graph sent:", graphTypeValue);
 
       // Convert first letter to lowercase (e.g., "Bar" becomes "bar")
       const formattedGraphType =

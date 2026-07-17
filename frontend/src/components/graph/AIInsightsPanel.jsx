@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect,useState } from "react";
+
 import api from "../../services/api";
 const AIInsightsPanel = ({ data, graphType, darkMode }) => {
-  const [insights, setInsights] = useState([]);
+  const [, setInsights] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isSpeaking, setIsSpeaking] = useState(false);
-  const [currentInsightIndex, setCurrentInsightIndex] = useState(null);
   const [explanation, setExplanation] = useState("");
   const [suggestions, setSuggestions] = useState("");
   const [roadmap, setRoadmap] = useState(null);
@@ -145,7 +144,7 @@ const AIInsightsPanel = ({ data, graphType, darkMode }) => {
     }
   };
 
-  // Generate AI insights using Gemini API with business context
+  // Generate AI insights using the backend API with business context
   const generateInsights = async (data, chartType, businessContext) => {
     try {
       const dataContext = JSON.stringify(data.slice(0, 10));
@@ -159,7 +158,7 @@ const AIInsightsPanel = ({ data, graphType, darkMode }) => {
       const parsedInsights = JSON.parse(response.data.insights || response.data);
       return parsedInsights;
     } catch (error) {
-      console.error("Error calling Gemini API:", error);
+      console.error("Error calling AI API:", error);
       throw error;
     }
   };
@@ -223,164 +222,8 @@ const AIInsightsPanel = ({ data, graphType, darkMode }) => {
     fetchAIInsights();
   };
 
-  // Handle text-to-speech for insights
-  const speakInsight = (insight, index) => {
-    // Stop any current speech
-    if (window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
 
-    if (isSpeaking && currentInsightIndex === index) {
-      // Toggle off if already speaking this insight
-      setIsSpeaking(false);
-      setCurrentInsightIndex(null);
-      window.speechSynthesis.cancel();
-    } else {
-      // Speak the new insight
-      const textToSpeak = `${insight.title}. ${insight.description}`;
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
 
-      // Configure speech settings
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
-
-      // Get available voices and try to select a good one
-      const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find(
-        (voice) =>
-          voice.name.includes("Google") ||
-          voice.name.includes("Female") ||
-          voice.name.includes("US English"),
-      );
-
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
-
-      // Set speaking state
-      setIsSpeaking(true);
-      setCurrentInsightIndex(index);
-
-      // Handle speech end
-      utterance.onend = () => {
-        setIsSpeaking(false);
-        setCurrentInsightIndex(null);
-      };
-
-      // Start speaking
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
-  // Get icon for insight type
-  const getInsightIcon = (type) => {
-    switch (type) {
-      case "trend":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-            />
-          </svg>
-        );
-      case "anomaly":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-            />
-          </svg>
-        );
-      case "opportunity":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            />
-          </svg>
-        );
-      case "risk":
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        );
-      default:
-        return (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-            />
-          </svg>
-        );
-    }
-  };
-
-  // Get color for insight type
-  const getInsightColor = (type) => {
-    switch (type) {
-      case "trend":
-        return darkMode ? "blue-500" : "blue-600";
-      case "anomaly":
-        return darkMode ? "yellow-400" : "yellow-500";
-      case "opportunity":
-        return darkMode ? "green-400" : "green-500";
-      case "risk":
-        return darkMode ? "red-400" : "red-500";
-      case "error":
-        return darkMode ? "red-400" : "red-500";
-      default:
-        return darkMode ? "purple-400" : "purple-500";
-    }
-  };
 
   // Modified input with history component that properly handles dropdown selection
   const renderInputWithHistory = (
@@ -650,7 +493,7 @@ const AIInsightsPanel = ({ data, graphType, darkMode }) => {
           Your 6-Month Strategic Roadmap
         </h3>
         <div className="space-y-6">
-          {months.map((month, index) => {
+          {months.map((month) => {
             if (!roadmap[month]) return null;
 
             return (

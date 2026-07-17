@@ -1,7 +1,8 @@
 # pyrefly: ignore [missing-import]
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
 import logging
+import os
+
+from motor.motor_asyncio import AsyncIOMotorClient
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -68,6 +69,7 @@ def get_db():
     return db
 
 from fastapi import HTTPException
+
 
 def get_active_db():
     """Dependency that ensures the database is connected before proceeding."""

@@ -1,6 +1,7 @@
 # pyrefly: ignore [missing-import]
 from pydantic import BaseModel
 
+
 class QueryRequest(BaseModel):
     query: str
     collection_name: str
@@ -22,9 +23,7 @@ class SendDataEmailRequest(BaseModel):
     subject: str
     message: str
     data: list
-    tableTitle: str
-    sendCopy: bool
-    
+
 class MutationRequest(BaseModel):
     collection_name: str
     mutation_id: str

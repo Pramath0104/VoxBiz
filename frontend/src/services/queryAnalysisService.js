@@ -70,7 +70,7 @@ export const analyzeQueryForClarification = async (query) => {
   return { needsClarification: false };
 };
 
-export const generateEnhancedJoinQuery = async (originalQuery, clarification, joinType) => {
+export const generateEnhancedJoinQuery = async (originalQuery, clarification) => {
   return `${originalQuery} (Join details: ${clarification})`;
 };
 
@@ -78,6 +78,6 @@ export const generateDuplicateHandlingQuery = async (originalQuery, clarificatio
   return `${originalQuery} (Duplicate handling: ${clarification})`;
 };
 
-export const handleDuplicateDataClarification = async (query) => {
+export const handleDuplicateDataClarification = async () => {
   return "Do you want to include or exclude duplicates?";
 };

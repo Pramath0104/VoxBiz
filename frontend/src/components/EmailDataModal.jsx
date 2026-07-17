@@ -1,25 +1,26 @@
-import React, { useState } from "react";
-import api from "../services/api";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField,
-  IconButton,
-  Typography,
-  Box,
-  CircularProgress,
-  Snackbar,
-  Alert,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import EmailIcon from "@mui/icons-material/Email";
-import DownloadIcon from "@mui/icons-material/Download";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import CloseIcon from "@mui/icons-material/Close";
+import DownloadIcon from "@mui/icons-material/Download";
+import EmailIcon from "@mui/icons-material/Email";
+import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  IconButton,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+
+import api from "../services/api";
 
 const EmailDataModal = ({ open, onClose, data, tableTitle, darkMode }) => {
   const [email, setEmail] = useState("");
@@ -46,7 +47,7 @@ const EmailDataModal = ({ open, onClose, data, tableTitle, darkMode }) => {
     }
     setLoading(true);
     try {
-      const response = await api.post("/query/send-data-email", {
+      await api.post("/query/send-data-email", {
         recipientEmail: email,
         subject: subject || `${tableTitle} Data Export`,
         message: message,

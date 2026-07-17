@@ -1,5 +1,7 @@
-from core.db_connection import get_db
 from datetime import datetime
+
+from core.db_connection import get_db
+
 
 class ResetTokenRepository:
     def get_collection(self):

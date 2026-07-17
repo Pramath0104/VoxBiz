@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
 import { Mic, MicOff } from "lucide-react";
+import React, { useEffect, useRef,useState } from "react";
 
 const VoiceSearchModal = ({ darkMode, onClose, onQuery }) => {
   const [isListening, setIsListening] = useState(false);

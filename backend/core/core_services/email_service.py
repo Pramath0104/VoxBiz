@@ -1,8 +1,10 @@
+import asyncio
 import os
 import smtplib
 from email.message import EmailMessage
-import asyncio
+
 from core.logger import logger
+
 
 class EmailService:
     def __init__(self):
@@ -16,8 +18,7 @@ class EmailService:
         if not self.smtp_host or not self.smtp_user or not self.smtp_pass:
             # Fallback to secure logging in development
             logger.info(f"Mock Email Dispatch: Delivered '{subject}' to {to_email} successfully. (SMTP not configured)")
-            # ONLY FOR LOCAL TESTING: Print the body to console so developers can see the reset code
-            print(f"\n--- MOCK EMAIL DELIVERED LOCALHOST ---\nTo: {to_email}\nSubject: {subject}\nBody:\n{body}\n--------------------------------------\n")
+            print(f"--- MOCK EMAIL BODY ---\n{body}\n-----------------------")
             return
             
         msg = EmailMessage()

@@ -1,7 +1,8 @@
+import { Database,Edit, Save } from "lucide-react";
 import React, { useState } from "react";
-import { Edit, Save, Database } from "lucide-react";
-import api from "../services/api";
 import toast from "react-hot-toast";
+
+import api from "../services/api";
 
 const DatabaseCredentials = ({ dbId, credentials, setCredentials, darkMode }) => {
   const [isEditing, setIsEditing] = useState(false);

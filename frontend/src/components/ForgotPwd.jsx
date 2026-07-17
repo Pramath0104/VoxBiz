@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
 import { Eye, EyeOff } from "lucide-react";
+import { useEffect,useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
+import api from "../services/api";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

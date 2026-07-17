@@ -1,39 +1,34 @@
-import React, { useState, useEffect, useRef } from "react";
-import Loader from "../components/ui/Loader";
-import { 
-  ToggleButtonGroup, 
-  ToggleButton, 
-  Select, 
-  MenuItem, 
-  FormControl, 
-  InputLabel,
-  Box,
-  Typography
-} from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
 import StorageIcon from "@mui/icons-material/Storage";
+import { 
+  Box,
+  FormControl, 
+  InputLabel,
+  MenuItem, 
+  Select, 
+  ToggleButton, 
+  ToggleButtonGroup, 
+  Typography
+} from "@mui/material";
 // Import icons
 import {
-  Mic,
-  Edit,
-  Save,
-  Database,
-  Key,
-  Lock,
-  Cog,
-  Send,
   MessageSquare,
+  Mic,
+  Send,
 } from "lucide-react";
-import VoiceSearchModal from "../components/VoiceSearchModal";
-import MutationPreviewModal from "../components/MutationPreviewModal";
+import React, { useEffect,useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import DatabaseCredentials from "../components/DatabaseCredentials";
-import { useLocation, Link, useNavigate, useParams } from "react-router-dom";
+import MutationPreviewModal from "../components/MutationPreviewModal";
+import Loader from "../components/ui/Loader";
+import VoiceSearchModal from "../components/VoiceSearchModal";
 import { useTheme } from "../contexts/ThemeContext";
 import api from "../services/api";
 import { 
   analyzeQueryForClarification, 
-  generateEnhancedJoinQuery, 
   generateDuplicateHandlingQuery, 
+  generateEnhancedJoinQuery, 
   handleDuplicateDataClarification 
 } from "../services/queryAnalysisService";
 
@@ -51,7 +46,7 @@ const DatabaseDetailsPage = () => {
   const dbId = isHubMode 
     ? (queryMode === "specific" ? selectedDbId : null) 
     : (routeDbId || dbInfo?.id);
-  // Static database data for testing
+
   const [database, setDatabase] = useState({
     id: "",
     name: "",
@@ -64,8 +59,8 @@ const DatabaseDetailsPage = () => {
     permissions: "readOnly",
   });
   const [queryContext, setQueryContext] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading] = useState(false);
+  const [error] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [processingVoice, setProcessingVoice] = useState(false);
@@ -138,13 +133,6 @@ const DatabaseDetailsPage = () => {
 
 
 
-  const handleCredentialChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleVoiceInput = () => {
     setShowVoiceModal(true);
@@ -203,7 +191,7 @@ const DatabaseDetailsPage = () => {
     apiCall
       .then((response) => response.data)
       .then((responseData) => {
-        console.log("Database query successful:", responseData);
+        
         setProcessingVoice(false);
 
         // Check if response indicates duplicate data that needs handling
@@ -229,7 +217,7 @@ const DatabaseDetailsPage = () => {
             "visualizationData",
             JSON.stringify(responseData),
           );
-          console.log("Data saved to sessionStorage successfully");
+          
         } catch (err) {
           console.error("Error saving to sessionStorage:", err);
         }
@@ -282,7 +270,6 @@ const DatabaseDetailsPage = () => {
   const handleConfirmMutation = async () => {
     if (!proposedMutation) return;
     
-    const currentDbId = dbId;
     if (!dbId) {
       setErrorMessage("Database ID not found. Please try again.");
       return;
@@ -298,7 +285,7 @@ const DatabaseDetailsPage = () => {
       if (response.data.success) {
         setSuccessMessage("Done: Changes applied successfully.");
         setTimeout(() => setSuccessMessage(""), 5000);
-        console.log("Done");
+        
         setConversation((prev) => [
           ...prev,
           {
@@ -313,7 +300,7 @@ const DatabaseDetailsPage = () => {
       const errorMsg = error.response?.data?.detail || "Failed to apply changes. Please try again.";
       setErrorMessage(errorMsg);
       setTimeout(() => setErrorMessage(""), 5000);
-      console.log("Failed");
+      
       console.error("Error executing mutation:", error);
     } finally {
       setProcessingVoice(false);
@@ -382,7 +369,7 @@ const DatabaseDetailsPage = () => {
         queryContext.joinType,
       )
         .then((enhancedQuery) => {
-          console.log("Enhanced join query:", enhancedQuery);
+          
           executeQuery(enhancedQuery);
         })
         .catch((error) => {
@@ -397,7 +384,7 @@ const DatabaseDetailsPage = () => {
     else if (queryContext.duplicateHandling) {
       generateDuplicateHandlingQuery(originalQuery, clarificationResponse)
         .then((enhancedQuery) => {
-          console.log("Enhanced duplicate handling query:", enhancedQuery);
+          
           executeQuery(enhancedQuery);
         })
         .catch((error) => {

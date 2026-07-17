@@ -1,32 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { FlipWords } from "../components/ui/flip-words";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useTheme } from "../contexts/ThemeContext";
 
 export function MainPage() {
   const navigate = useNavigate();
-  const features = [
-    "AI-powered",
-    "Collaborative",
-    "Real-time",
-    "Multilingual",
-    "Intuitive",
-  ];
   const { isDarkMode: darkMode } = useTheme();
 
 
-  // Languages with their native scripts
-  const languages = [
-    { name: "English", native: "English" },
-    { name: "Hindi", native: "हिन्दी" },
-    { name: "Kannada", native: "ಕನ್ನಡ" },
-    { name: "Tamil", native: "தமிழ்" },
-    { name: "Telugu", native: "తెలుగు" },
-    { name: "Malayalam", native: "മലയാളം" },
-  ];
 
   const scrollToDemo = () => {
     navigate("/demo");

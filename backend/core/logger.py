@@ -1,8 +1,8 @@
-import logging
-from pythonjsonlogger import jsonlogger
-import sys
 import contextvars
-import uuid
+import logging
+import sys
+
+from pythonjsonlogger import jsonlogger
 
 # Context variable to hold the request ID for the current async context
 request_id_var = contextvars.ContextVar("request_id", default="-")

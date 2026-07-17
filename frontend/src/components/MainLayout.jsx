@@ -1,7 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+
 import { useTheme } from "../contexts/ThemeContext";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 const MainLayout = ({ children, className = "" }) => {
   const { isDarkMode } = useTheme();

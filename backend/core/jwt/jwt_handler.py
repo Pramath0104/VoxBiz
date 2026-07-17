@@ -1,6 +1,8 @@
 import os
-import jwt
 from datetime import datetime, timedelta
+
+import jwt
+
 # pyrefly: ignore [missing-import]
 from passlib.context import CryptContext
 

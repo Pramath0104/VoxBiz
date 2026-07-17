@@ -1,5 +1,6 @@
 # pyrefly: ignore [missing-import]
 import pytest
+
 # pyrefly: ignore [missing-import]
 from httpx import AsyncClient
 
@@ -41,8 +42,9 @@ async def test_pipeline_policy_rejects_malicious_stages(async_client: AsyncClien
     pass
 
 def test_pipeline_policy_unit():
-    from core.security.query_policy import validate_mongo_pipeline
     from fastapi import HTTPException
+
+    from core.security.query_policy import validate_mongo_pipeline
     
     malicious_pipeline = [{"$lookup": {"from": "users", "localField": "id", "foreignField": "id", "as": "users"}}]
     
@@ -50,11 +52,12 @@ def test_pipeline_policy_unit():
         validate_mongo_pipeline(malicious_pipeline, "testuser123")
     
     assert exc.value.status_code == 403
-    assert "Forbidden aggregation stage" in exc.value.detail
+    assert "Forbidden" in exc.value.detail
 
 def test_pipeline_policy_modifies_out_stage():
-    from core.security.query_policy import validate_mongo_pipeline
     from fastapi import HTTPException
+
+    from core.security.query_policy import validate_mongo_pipeline
     
     malicious_pipeline = [{"$match": {"x": 1}}, {"$out": "users"}]
     

@@ -1,12 +1,12 @@
-import React, { Suspense, lazy } from "react";
+import { AnimatePresence,motion } from "motion/react";
+import React, { lazy,Suspense } from "react";
 import {
   BrowserRouter as Router,
-  Routes,
-  Route,
   Navigate,
+  Route,
+  Routes,
   useLocation
 } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
 
 // Lazy loaded components
 const Signin = lazy(() => import("./components/Signin"));
@@ -24,10 +24,11 @@ const AboutPage = lazy(() => import("./pages/AboutPage"));
 const DemoPage = lazy(() => import("./pages/DemoPage").then(module => ({ default: module.DemoPage })));
 const ProfilePage = lazy(() => import("./pages/ProfilePage"));
 
-import Threads from "./components/Threads";
-import { useTheme } from "./contexts/ThemeContext";
 import { Toaster } from "react-hot-toast";
+
+import Threads from "./components/Threads";
 import Loader from "./components/ui/Loader";
+import { useTheme } from "./contexts/ThemeContext";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
