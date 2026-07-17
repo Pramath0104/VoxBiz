@@ -59,3 +59,4 @@ pytest
 pytest-asyncio
 httpx
 prometheus-fastapi-instrumentator
+python-json-logger
