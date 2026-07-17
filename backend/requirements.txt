@@ -58,3 +58,4 @@ slowapi==0.1.9
 pytest
 pytest-asyncio
 httpx
+prometheus-fastapi-instrumentator
