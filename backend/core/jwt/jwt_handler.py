@@ -20,7 +20,7 @@ JWT_SECRET = os.getenv("JWT_SECRET")
 if not JWT_SECRET or len(JWT_SECRET) < 32:
     raise ValueError("FATAL: JWT_SECRET environment variable is missing or too short (must be >= 32 chars).")
 JWT_ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 1 week
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 15))
 
 def create_access_token(data: dict) -> str:
     to_encode = data.copy()

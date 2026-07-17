@@ -36,7 +36,7 @@ jobs:
         MONGODB_URI: mongodb://localhost:27017
         JWT_SECRET: testing_secret_key
         ALGORITHM: HS256
-        ACCESS_TOKEN_EXPIRE_MINUTES: 30
+        ACCESS_TOKEN_EXPIRE_MINUTES: 15
       run: |
         PYTHONPATH=. pytest tests/ -v
 
