@@ -1,5 +1,6 @@
 import os
 
+# pyrefly: ignore [missing-import]
 from dotenv import load_dotenv
 
 # Load environment variables before any application imports
@@ -11,9 +12,13 @@ from fastapi import FastAPI, Request
 
 # pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
+# pyrefly: ignore [missing-import]
 from prometheus_fastapi_instrumentator import Instrumentator
+# pyrefly: ignore [missing-import]
 from slowapi import _rate_limit_exceeded_handler
+# pyrefly: ignore [missing-import]
 from slowapi.errors import RateLimitExceeded
+# pyrefly: ignore [missing-import]
 from slowapi.middleware import SlowAPIMiddleware
 
 from core.db_connection import close_mongo_connection, connect_to_mongo, get_db
@@ -86,6 +91,7 @@ async def health_check(request: Request):
     except Exception as e:
         logger.error(f"Readiness check failed: {str(e)}")
         # Returning 503 Service Unavailable if database is down
+        # pyrefly: ignore [missing-import]
         from fastapi.responses import JSONResponse
         return JSONResponse(status_code=503, content={"status": "error", "database": "disconnected"})
 
