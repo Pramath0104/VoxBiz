@@ -13,7 +13,7 @@ VoxBiz is an intelligent, AI-powered data visualization and analytics platform. 
 - **Database Integrations & Access Control:** Connect directly to MongoDB collections with secure Read-Only or Read/Write permission modes.
 - **Advanced Data Management:** Securely bulk delete records directly from the frontend table UI. 
 - **Export & Share:** Select specific data rows to selectively download as a CSV or instantly email the selected payload to stakeholders directly from the UI.
-- **Robust Authentication:** Secure JWT-based login with a fully featured Password Reset flow (includes secure, expiring 30-second reset codes, rate limiting, and beautiful toast notifications).
+- **Robust Authentication:** Secure JWT-based login with a fully featured Password Reset flow (includes secure, expiring 30-second reset codes, rate limiting, and beautiful toast notifications). JWT tokens expire after 2 hours by default.
 - **Premium Glassmorphism UI:** Built with React, Vite, and TailwindCSS for a highly responsive, modern, dark-mode supported user experience featuring frosted glass cards and animated canvas backgrounds.
 
 ## 🛠️ Technology Stack
@@ -58,6 +58,7 @@ PORT=8000
 MONGODB_URI="your_mongodb_connection_string"
 NVIDIA_API_KEY="your_nvidia_nim_api_key"
 JWT_SECRET="a_secure_random_string_of_at_least_32_characters"
+ACCESS_TOKEN_EXPIRE_MINUTES=120
 ALLOWED_ORIGINS="http://localhost:3000,http://localhost:5173"
 ENVIRONMENT="development"
 
