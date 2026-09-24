@@ -517,7 +517,7 @@ const DatabaseDetailsPage = () => {
       <div className="container mx-auto px-4 py-6 md:px-6 lg:flex">
         {/* Left Sidebar - 40% width */}
         <div className="lg:w-2/5 mb-6 lg:mb-0 lg:pr-6">
-          <div className="h-full flex flex-col items-center justify-center text-center p-6 bg-transparent">
+          <div className="h-full flex flex-col items-center justify-start text-center p-6 bg-transparent pt-32 mt-16">
             {isHubMode ? (
               <Box sx={{ width: '100%', mb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h4" fontWeight="bold" sx={{ mb: 3, color: darkMode ? 'white' : 'text.primary' }}>
@@ -530,7 +530,18 @@ const DatabaseDetailsPage = () => {
                   exclusive
                   onChange={(e, newMode) => { if (newMode) setQueryMode(newMode); }}
                   aria-label="Query Mode"
-                  sx={{ mb: 4, bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : 'white' }}
+                  sx={{ 
+                    mb: 4, 
+                    bgcolor: darkMode ? 'rgba(255,255,255,0.05)' : 'white',
+                    '& .MuiToggleButton-root': {
+                      color: darkMode ? '#f59e0b' : 'inherit', // amber-500
+                      borderColor: darkMode ? 'rgba(245, 158, 11, 0.3)' : 'rgba(0, 0, 0, 0.12)',
+                    },
+                    '& .Mui-selected': {
+                      color: darkMode ? '#fbbf24 !important' : 'inherit', // amber-400
+                      backgroundColor: darkMode ? 'rgba(251, 191, 36, 0.15) !important' : 'rgba(0, 0, 0, 0.08)',
+                    }
+                  }}
                 >
                   <ToggleButton value="global" aria-label="global mode" sx={{ px: 2 }}>
                     <LanguageIcon sx={{ mr: 1 }} /> Global Search
@@ -540,23 +551,64 @@ const DatabaseDetailsPage = () => {
                   </ToggleButton>
                 </ToggleButtonGroup>
 
-                {queryMode === "specific" && (
-                  <FormControl fullWidth sx={{ mb: 2 }}>
-                    <InputLabel id="db-select-label">Select Database</InputLabel>
-                    <Select
-                      labelId="db-select-label"
-                      value={selectedDbId}
-                      label="Select Database"
-                      onChange={(e) => setSelectedDbId(e.target.value)}
-                    >
-                      {availableDbs.map((db) => (
-                        <MenuItem key={db.id} value={db.id}>
-                          {db.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                )}
+                <FormControl 
+                  fullWidth 
+                  sx={{ 
+                    mb: 2, 
+                    visibility: queryMode === "specific" ? "visible" : "hidden"
+                  }}
+                >
+                  <InputLabel 
+                    id="db-select-label"
+                    sx={{ color: darkMode ? 'rgba(255,255,255,0.7)' : 'inherit' }}
+                  >
+                    Select Database
+                  </InputLabel>
+                  <Select
+                    labelId="db-select-label"
+                    value={selectedDbId}
+                    label="Select Database"
+                    onChange={(e) => setSelectedDbId(e.target.value)}
+                    sx={{
+                      color: darkMode ? '#fff' : 'inherit',
+                      '.MuiOutlinedInput-notchedOutline': {
+                        borderColor: darkMode ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.23)',
+                      },
+                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: darkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.87)',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: darkMode ? '#fbbf24' : 'primary.main',
+                      },
+                      '.MuiSvgIcon-root': {
+                        color: darkMode ? 'rgba(255, 255, 255, 0.7)' : 'inherit',
+                      }
+                    }}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          bgcolor: darkMode ? 'rgb(30, 41, 59)' : 'white',
+                          color: darkMode ? 'white' : 'inherit',
+                          '& .MuiMenuItem-root:hover': {
+                            bgcolor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.04)',
+                          },
+                          '& .Mui-selected': {
+                            bgcolor: darkMode ? 'rgba(251, 191, 36, 0.15) !important' : 'rgba(0, 0, 0, 0.08) !important',
+                          },
+                          '& .Mui-selected:hover': {
+                            bgcolor: darkMode ? 'rgba(251, 191, 36, 0.25) !important' : 'rgba(0, 0, 0, 0.12) !important',
+                          }
+                        }
+                      }
+                    }}
+                  >
+                    {availableDbs.map((db) => (
+                      <MenuItem key={db.id} value={db.id}>
+                        {db.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Box>
             ) : (
               <>

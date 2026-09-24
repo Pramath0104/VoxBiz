@@ -242,7 +242,10 @@ const DatabaseDashboard = () => {
                           {/* View Data Button */}
                           <div className="relative group">
                             <button
-                              onClick={() => handleViewData(db.id, db.name)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleViewData(db.id, db.name);
+                              }}
                               className={`p-1 rounded ${
                                 darkMode
                                   ? "bg-emerald-600 hover:bg-emerald-700"
